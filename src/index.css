@@ -1,0 +1,215 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Instrument Sans', sans-serif;
+  --font-display: 'DM Serif Display', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-caveat: 'Caveat', cursive;
+  --font-dm-sans: 'DM Sans', sans-serif;
+}
+
+/* ===== BASE STYLES ===== */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #FAFAF8;
+    color: #0D1B2A;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgba(201, 149, 42, 0.2);
+    color: #0D1B2A;
+  }
+}
+
+/* ===== SCROLL PROGRESS BAR ===== */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #C9952A, #F0C96A);
+  z-index: 9999;
+  transition: width 0.05s linear;
+}
+
+/* ===== SECTION DIVIDER ===== */
+.section-divider {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(201, 149, 42, 0) 0%,
+    rgba(201, 149, 42, 0.3) 50%,
+    rgba(201, 149, 42, 0) 100%
+  );
+}
+
+/* ===== EYEBROW LABEL ===== */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #9CA3AF;
+}
+
+.eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: #C9952A;
+}
+
+.eyebrow-light {
+  color: rgba(245, 240, 232, 0.35);
+}
+
+.eyebrow-light::before {
+  background: rgba(201, 149, 42, 0.5);
+}
+
+/* ===== PULSING ACTIVE DOT ===== */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.8); }
+}
+
+.active-dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  display: inline-flex;
+}
+
+.active-dot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #22C55E;
+  animation: pulse-dot 2.2s ease-in-out infinite;
+}
+
+.active-dot::after {
+  content: '';
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22C55E;
+}
+
+/* ===== SCANLINE ANIMATION ===== */
+@keyframes scanline {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+/* ===== SHIMMER BUTTON ===== */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+  transition: none;
+}
+
+.btn-shimmer:hover::after {
+  left: 100%;
+  transition: left 0.5s ease;
+}
+
+/* ===== DASH ANIMATION ===== */
+@keyframes dash {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ===== SPIN LOADER ===== */
+@keyframes spin-loader {
+  to { transform: rotate(360deg); }
+}
+
+/* ===== HEX CLIP PATH ===== */
+.hex-clip {
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+/* ===== CARD HOVER BASE ===== */
+.card-lift {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+              border-color 0.2s ease;
+}
+
+.card-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 64px rgba(13, 27, 42, 0.14);
+  border-color: rgba(201, 149, 42, 0.5);
+}
+
+/* ===== HEXAGON TILE BACKGROUND ===== */
+.hex-bg {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg stroke='%23C9952A' stroke-opacity='0.06' fill='none' stroke-width='0.5'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* ===== NOISE TEXTURE OVERLAY ===== */
+.noise-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ===== TEXT ROLL ANIMATION (Hero/Footer) ===== */
+.text-roll {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 20px;
+  min-width: 0;
+}
+
+.text-roll > span {
+  display: flex;
+  align-items: center;
+  height: 20px;
+  flex-shrink: 0;
+  transition: transform 500ms cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.group:hover .text-roll > span {
+  transform: translateY(-50%);
+}
+
+/* ===== MOBILE SLIDE-UP ANIMATION ===== */
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
