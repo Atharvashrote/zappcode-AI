@@ -1,12 +1,13 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { Quote, Star } from 'lucide-react';
 
-const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
+const ease: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
 const testimonials = [
-    { quote: 'We reduced forecast error by 31% in Q1. The Forecast Agent alone paid for the entire platform.', name: 'Rajesh Mehta', title: 'VP Supply Chain', company: '$2B FMCG Company', initials: 'RM', bg: '#1a3a5c' },
-    { quote: 'The ERP Action Agent eliminated our weekly planning meeting. 3-day decisions now happen in 20 minutes.', name: 'Sarah Chen', title: 'Chief Operations Officer', company: 'National Retail Group', initials: 'SC', bg: '#5c1a3a' },
-    { quote: 'We caught a competitor pricing shift 11 days before our team would have spotted it manually.', name: 'Arjun Patel', title: 'CEO', company: 'Mid-Market Manufacturer', initials: 'AP', bg: '#3a5c1a' },
+    { quote: 'We reduced forecast error by 31% in Q1. The Forecast Agent alone paid for the entire platform.', name: 'Rajesh Mehta', title: 'VP Supply Chain', company: '$2B FMCG Company', initials: 'RM', gradient: 'linear-gradient(135deg, #2563EB, #4f46e5)', metric: '31%', metricLabel: 'Error Reduction' },
+    { quote: 'The ERP Action Agent eliminated our weekly planning meeting. 3-day decisions now happen in 20 minutes.', name: 'Sarah Chen', title: 'Chief Operations Officer', company: 'National Retail Group', initials: 'SC', gradient: 'linear-gradient(135deg, #7c3aed, #a855f7)', metric: '20min', metricLabel: 'Decision Time' },
+    { quote: 'We caught a competitor pricing shift 11 days before our team would have spotted it manually.', name: 'Arjun Patel', title: 'CEO', company: 'Mid-Market Manufacturer', initials: 'AP', gradient: 'linear-gradient(135deg, #059669, #22C55E)', metric: '11 days', metricLabel: 'Early Detection' },
 ];
 
 const logoStrip = ['Manufacturing', 'FMCG', 'Retail', 'Pharma', 'Automotive', 'E-Commerce'];
@@ -16,77 +17,96 @@ export default function SocialProof() {
     const inView = useInView(ref, { once: true, margin: '-80px' });
 
     return (
-        <section ref={ref} id="social-proof" style={{ background: '#FFFFFF', padding: '96px 64px' }}>
-            <div className="max-w-[1200px] mx-auto">
-                {/* Eyebrow */}
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, ease }} className="text-center" style={{ marginBottom: '24px' }}>
-                    <span className="eyebrow" style={{ justifyContent: 'center' }}>Trust Signals</span>
-                </motion.div>
-
-                <motion.h2 initial={{ opacity: 0, y: 40 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay: 0.1, ease }} className="text-center" style={{ fontFamily: "'DM Serif Display'", fontSize: 'clamp(1.8rem, 4vw, 3rem)', color: '#0D1B2A', lineHeight: 1.15, margin: '0 0 20px' }}>
-                    Leaders who chose <em style={{ color: '#C9952A', fontStyle: 'italic' }}>intelligence over instinct.</em>
-                </motion.h2>
+        <section ref={ref} id="social-proof" className="section-light-alt" style={{ padding: 'clamp(80px, 12vw, 160px) 0' }}>
+            <div className="max-w-[1400px] mx-auto" style={{ padding: '0 clamp(24px, 5vw, 64px)' }}>
+                {/* Header */}
+                <div className="text-center" style={{ marginBottom: '24px' }}>
+                    <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, ease }}>
+                        <span className="eyebrow" style={{ justifyContent: 'center' }}>Trust Signals</span>
+                    </motion.div>
+                    <motion.h2 initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.1, ease }}
+                        style={{ fontFamily: "'DM Serif Display', serif", fontSize: 'clamp(2.2rem, 5vw, 3.8rem)', color: '#0F172A', lineHeight: 1.08, margin: '28px 0 0' }}
+                    >
+                        Leaders who chose{' '}<span className="gradient-text">intelligence.</span>
+                    </motion.h2>
+                </div>
 
                 {/* Logo strip */}
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.3 }} className="flex flex-wrap justify-center items-center" style={{ marginBottom: '56px', gap: 0 }}>
-                    <p style={{ fontFamily: "'JetBrains Mono'", fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#9CA3AF', width: '100%', textAlign: 'center', marginBottom: '20px' }}>Trusted Across Industries</p>
-                    <div className="flex flex-wrap justify-center items-center">
-                        {logoStrip.map((logo, i) => (
-                            <div key={logo} className="flex items-center">
-                                {i > 0 && <div style={{ width: '0.5px', height: '20px', background: '#E8E2D9', margin: '0 16px' }} />}
-                                <span className="transition-all duration-300 cursor-default" style={{ fontFamily: "'JetBrains Mono'", fontSize: '12px', letterSpacing: '0.06em', textTransform: 'uppercase', color: '#9CA3AF', filter: 'grayscale(100%) opacity(40%)', padding: '4px 0' }}
-                                    onMouseEnter={(e) => { e.currentTarget.style.filter = 'none'; e.currentTarget.style.color = '#0D1B2A'; e.currentTarget.style.transform = 'scale(1.05)'; }}
-                                    onMouseLeave={(e) => { e.currentTarget.style.filter = 'grayscale(100%) opacity(40%)'; e.currentTarget.style.color = '#9CA3AF'; e.currentTarget.style.transform = 'scale(1)'; }}>
-                                    {logo}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
+                <motion.div initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ delay: 0.3 }}
+                    className="flex flex-wrap justify-center items-center" style={{ marginBottom: '56px' }}
+                >
+                    {logoStrip.map((logo, i) => (
+                        <div key={logo} className="flex items-center">
+                            {i > 0 && <div style={{ width: '1px', height: '16px', background: 'rgba(0,0,0,0.08)', margin: '0 clamp(12px, 2.5vw, 28px)' }} />}
+                            <span style={{
+                                fontFamily: "'JetBrains Mono', monospace", fontSize: '11px',
+                                letterSpacing: '0.1em', textTransform: 'uppercase', color: '#94a3b8',
+                                transition: 'color 0.3s ease', cursor: 'default',
+                            }}
+                                onMouseEnter={(e) => { e.currentTarget.style.color = '#2563EB'; }}
+                                onMouseLeave={(e) => { e.currentTarget.style.color = '#94a3b8'; }}
+                            >{logo}</span>
+                        </div>
+                    ))}
                 </motion.div>
 
-                {/* Testimonial cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                {/* Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: '16px' }}>
                     {testimonials.map((t, i) => (
-                        <motion.div key={t.name}
-                            initial={{ opacity: 0, y: 32 }}
-                            animate={inView ? { opacity: 1, y: 0 } : {}}
-                            transition={{ duration: 0.5, delay: 0.4 + i * 0.08, ease }}
-                            className="card-lift flex flex-col"
-                            style={{ background: '#FFFFFF', border: '0.5px solid #E8E2D9', borderLeft: '2px solid #C9952A', borderRadius: '16px', padding: '24px', cursor: 'default' }}>
-
-                            {/* Stars */}
-                            <div style={{ fontSize: '12px', color: '#C9952A', letterSpacing: '2px', marginBottom: '14px' }}>★★★★★</div>
-
-                            {/* Quote */}
-                            <p className="flex-1" style={{ fontFamily: "'DM Serif Display'", fontStyle: 'italic', fontSize: '15px', color: '#374151', lineHeight: 1.6, margin: '0 0 20px' }}>
-                                &ldquo;{t.quote}&rdquo;
-                            </p>
-
-                            {/* Attribution */}
-                            <div className="flex items-center" style={{ gap: '12px' }}>
-                                <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: t.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 700, color: '#F5F0E8', flexShrink: 0 }}>
-                                    {t.initials}
-                                </div>
+                        <motion.div key={t.name} initial={{ opacity: 0, y: 40 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.4 + i * 0.12, ease }}
+                            className="card-light flex flex-col overflow-hidden" style={{ padding: 0 }}
+                        >
+                            {/* Metric banner */}
+                            <div style={{
+                                padding: '24px 28px',
+                                background: 'linear-gradient(135deg, #f8fafc, #eef2ff)',
+                                borderBottom: '1px solid rgba(0,0,0,0.04)',
+                                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                            }}>
                                 <div>
-                                    <p style={{ fontFamily: "'Instrument Sans'", fontSize: '14px', fontWeight: 500, color: '#0D1B2A', margin: '0 0 1px' }}>{t.name}</p>
-                                    <p style={{ fontFamily: "'JetBrains Mono'", fontSize: '10px', color: '#9CA3AF', letterSpacing: '0.04em', margin: 0 }}>{t.title}, {t.company}</p>
+                                    <div className="gradient-text" style={{ fontFamily: "'DM Serif Display', serif", fontSize: '32px', lineHeight: 1 }}>{t.metric}</div>
+                                    <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '9px', color: '#94a3b8', letterSpacing: '0.12em', textTransform: 'uppercase', marginTop: '4px' }}>{t.metricLabel}</div>
+                                </div>
+                                <Quote size={20} style={{ color: 'rgba(37,99,235,0.15)' }} />
+                            </div>
+
+                            <div style={{ padding: '24px 28px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                                <div style={{ display: 'flex', gap: '2px', marginBottom: '16px' }}>
+                                    {[...Array(5)].map((_, j) => <Star key={j} size={14} style={{ color: '#2563EB', fill: '#2563EB' }} />)}
+                                </div>
+
+                                <p className="flex-1" style={{
+                                    fontFamily: "'DM Serif Display', serif", fontStyle: 'italic', fontSize: '15px',
+                                    color: '#475569', lineHeight: 1.65, margin: '0 0 24px',
+                                }}>&ldquo;{t.quote}&rdquo;</p>
+
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                    <div style={{
+                                        width: '44px', height: '44px', borderRadius: '14px',
+                                        background: t.gradient,
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                        fontSize: '14px', fontWeight: 700, color: '#fff', flexShrink: 0,
+                                    }}>{t.initials}</div>
+                                    <div>
+                                        <p style={{ fontSize: '14px', fontWeight: 600, color: '#0F172A', margin: '0 0 2px' }}>{t.name}</p>
+                                        <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '10px', color: '#94a3b8', letterSpacing: '0.04em', margin: 0 }}>{t.title}, {t.company}</p>
+                                    </div>
                                 </div>
                             </div>
                         </motion.div>
                     ))}
                 </div>
 
-                {/* India badge */}
-                <motion.div initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ duration: 0.6, delay: 0.8 }} className="flex justify-center" style={{ marginTop: '40px' }}>
-                    <div className="inline-flex items-center" style={{ gap: '8px', padding: '10px 24px', borderRadius: '100px', background: 'rgba(201,149,42,0.06)', border: '0.5px solid rgba(201,149,42,0.2)' }}>
-                        <span style={{ fontSize: '14px' }}>🇮🇳</span>
-                        <span style={{ fontFamily: "'JetBrains Mono'", fontSize: '11px', letterSpacing: '0.06em', color: '#C9952A', fontWeight: 600 }}>
-                            Trusted by enterprises across India
-                        </span>
-                    </div>
+                {/* Badge */}
+                <motion.div initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ delay: 0.8 }}
+                    className="flex justify-center" style={{ marginTop: '48px' }}
+                >
+                    <span className="metric-badge" style={{ gap: '10px' }}>
+                        <span style={{ fontSize: '16px' }}>🇮🇳</span>
+                        <span style={{ color: '#2563EB', fontWeight: 600 }}>Trusted by enterprises across India</span>
+                    </span>
                 </motion.div>
             </div>
-            <div className="section-divider" style={{ marginTop: '96px' }} />
         </section>
     );
 }

@@ -1,13 +1,15 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { Crown, Check } from 'lucide-react';
+import agentsImg from '../assets/sections/agents_visual.png';
 
-const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
+const ease: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
 const comparisons = [
-    { name: 'Alibaba DAMO', origin: 'China · E-Commerce Giant', power: 'Massive consumer data scale' },
-    { name: 'Oracle Demantra', origin: 'USA · Enterprise Legacy', power: 'Deep ERP integration' },
-    { name: 'Palantir Foundry', origin: 'USA · Defence-Grade AI', power: 'Complex data modelling' },
-    { name: 'AigentG9', origin: 'India · Purpose-Built', power: '9-agent autonomous intelligence', highlight: true },
+    { name: 'Alibaba DAMO', origin: 'China', power: 'Massive consumer data scale', features: ['Consumer analytics', 'E-comm optimization'], color: '#ef4444' },
+    { name: 'Oracle Demantra', origin: 'USA', power: 'Deep ERP integration', features: ['Legacy ERP sync', 'Batch processing'], color: '#f97316' },
+    { name: 'Palantir Foundry', origin: 'USA', power: 'Complex data modelling', features: ['Data integration', 'Custom workflows'], color: '#8b5cf6' },
+    { name: 'AigentG9', origin: 'India', power: '9-agent autonomous intelligence', highlight: true, features: ['9 autonomous agents', 'Real-time decisions', '48hr deployment', 'No code changes'], color: '#2563EB' },
 ];
 
 export default function BrandStory() {
@@ -15,72 +17,101 @@ export default function BrandStory() {
     const inView = useInView(ref, { once: true, margin: '-80px' });
 
     return (
-        <section ref={ref} id="story" style={{ background: '#F5F0E8', padding: '96px 64px' }}>
-            <div className="max-w-[1200px] mx-auto">
-                {/* Eyebrow */}
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, ease }} style={{ marginBottom: '24px' }}>
-                    <span className="eyebrow">The Story</span>
-                </motion.div>
+        <section ref={ref} id="story" className="section-light" style={{ padding: 'clamp(80px, 12vw, 160px) 0' }}>
+            <div className="max-w-[1400px] mx-auto" style={{ padding: '0 clamp(24px, 5vw, 64px)' }}>
 
-                {/* 50/50 grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
-                    {/* Left — Editorial quote */}
-                    <motion.div initial={{ opacity: 0, y: 40 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, delay: 0.1, ease }} className="relative">
-                        {/* Giant decorative quote mark */}
-                        <span className="absolute -top-8 -left-4 select-none" style={{ fontFamily: "'DM Serif Display'", fontSize: '160px', color: 'rgba(201,149,42,0.10)', lineHeight: 0.8, pointerEvents: 'none' }}>&ldquo;</span>
+                {/* ─── TWO-COLUMN GRID ─── */}
+                <div className="grid grid-cols-1 lg:grid-cols-2" style={{ gap: 'clamp(32px, 5vw, 64px)', alignItems: 'center' }}>
 
-                        <blockquote className="relative" style={{ margin: 0, padding: '0 0 0 28px', borderLeft: '2px solid #C9952A' }}>
-                            <p style={{ fontFamily: "'DM Serif Display'", fontSize: 'clamp(18px, 2vw, 22px)', fontStyle: 'italic', color: '#0D1B2A', lineHeight: 1.6, margin: '0 0 24px' }}>
-                                Just as Gunmaster G9 anticipated every threat before it arrived —{' '}
-                                <span style={{ color: '#C9952A' }}>
-                                    AigentG9 sees your demand shifts before your competition does.
-                                </span>
-                            </p>
-                        </blockquote>
-
-                        <div style={{ paddingLeft: '28px' }}>
-                            <p style={{ fontSize: '14px', color: '#6B7280', lineHeight: 1.8, marginBottom: '16px' }}>
-                                AigentG9 draws its name from the legendary Gunmaster G9 — a character defined by anticipation, precision, and multi-dimensional awareness. Our platform deploys 9 autonomous AI agents that work in concert to give your enterprise a decisive edge.
-                            </p>
-                            <p style={{ fontSize: '14px', color: '#0D1B2A', lineHeight: 1.8, fontWeight: 600, margin: 0 }}>
-                                This isn&apos;t another dashboard. It&apos;s an autonomous intelligence layer.
-                            </p>
-
-                            {/* Attribution */}
-                            <div style={{ marginTop: '24px', fontFamily: "'JetBrains Mono'", fontSize: '10px', letterSpacing: '0.15em', color: '#9CA3AF', textTransform: 'uppercase' }}>
-                                Born in India · Built for Global Enterprise
-                            </div>
+                    {/* LEFT — Image */}
+                    <motion.div initial={{ opacity: 0, x: -40, scale: 0.96 }} animate={inView ? { opacity: 1, x: 0, scale: 1 } : {}} transition={{ duration: 1, ease }}>
+                        <div className="img-showcase" style={{ overflow: 'hidden', borderRadius: '28px' }}>
+                            <img src={agentsImg} alt="9 AI Agent Constellation" loading="lazy" decoding="async" style={{ objectPosition: 'center', width: '100%', height: '100%', objectFit: 'cover', minHeight: 480 }} />
                         </div>
                     </motion.div>
 
-                    {/* Right — 2×2 comparison cards */}
-                    <div className="grid grid-cols-2 gap-4">
-                        {comparisons.map((c, i) => (
-                            <motion.div key={c.name}
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                animate={inView ? { opacity: 1, scale: 1 } : {}}
-                                transition={{ duration: 0.5, delay: 0.4 + i * 0.1, ease }}
-                                className="relative card-lift"
-                                style={{
-                                    padding: '22px',
-                                    borderRadius: '16px',
-                                    background: c.highlight ? 'rgba(201,149,42,0.04)' : '#FFFFFF',
-                                    border: c.highlight ? '1px solid #C9952A' : '0.5px solid #E8E2D9',
-                                    cursor: 'default',
-                                }}>
-                                {/* Gold corner accent for AigentG9 */}
-                                {c.highlight && (
-                                    <div className="absolute top-0 right-0" style={{ width: 0, height: 0, borderTop: '20px solid #C9952A', borderLeft: '20px solid transparent', borderTopRightRadius: '16px' }} />
-                                )}
-                                <p style={{ fontFamily: "'JetBrains Mono'", fontSize: '9px', color: '#9CA3AF', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '8px' }}>{c.origin}</p>
-                                <h4 style={{ fontFamily: "'DM Serif Display'", fontSize: '16px', color: c.highlight ? '#C9952A' : '#0D1B2A', marginBottom: '6px' }}>{c.name}</h4>
-                                <p style={{ fontSize: '12px', color: '#6B7280', lineHeight: 1.5, margin: 0 }}>{c.power}</p>
-                            </motion.div>
-                        ))}
+                    {/* RIGHT — Content */}
+                    <div>
+                        {/* Header */}
+                        <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.1, ease }}>
+                            <span className="eyebrow">The Story</span>
+                        </motion.div>
+                        <motion.h2 initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.2, ease }}
+                            style={{ fontFamily: "'DM Serif Display', serif", fontSize: 'clamp(2rem, 4vw, 3rem)', color: '#0F172A', lineHeight: 1.15, margin: '24px 0 20px' }}
+                        >
+                            Named after the legend.{' '}<br /><span className="gradient-text">Built for the future.</span>
+                        </motion.h2>
+
+                        {/* Quote */}
+                        <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.3, ease }}
+                            className="card-light" style={{ padding: '24px', marginBottom: '20px', borderLeft: '3px solid #2563EB' }}
+                        >
+                            <p style={{ fontFamily: "'DM Serif Display', serif", fontSize: '16px', fontStyle: 'italic', color: '#2563EB', lineHeight: 1.6, margin: 0 }}>
+                                &ldquo;Just as Gunmaster G9 anticipated every threat — AigentG9 sees your demand shifts before your competition does.&rdquo;
+                            </p>
+                        </motion.div>
+
+                        {/* Description */}
+                        <motion.p initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ delay: 0.4 }}
+                            style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.8, marginBottom: '16px' }}
+                        >
+                            9 autonomous AI agents working in concert to give your enterprise a decisive edge. This isn&apos;t another dashboard — it&apos;s an autonomous intelligence layer.
+                        </motion.p>
+
+                        {/* Chips */}
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: 'clamp(28px, 4vw, 40px)' }}>
+                            {['Autonomous', 'Real-time', 'Multi-agent', 'Enterprise'].map((chip) => (
+                                <span key={chip} className="metric-badge" style={{ fontSize: '10px', letterSpacing: '0.12em', textTransform: 'uppercase', color: '#2563EB' }}>
+                                    {chip}
+                                </span>
+                            ))}
+                        </div>
+
+                        {/* Comparison Grid */}
+                        <div className="grid grid-cols-2" style={{ gap: '10px' }}>
+                            {comparisons.map((c, i) => (
+                                <motion.div key={c.name} initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.3 + i * 0.1, ease }}
+                                    className="card-light relative"
+                                    style={{
+                                        padding: '20px',
+                                        borderColor: (c as any).highlight ? '#2563EB' : 'rgba(0,0,0,0.06)',
+                                        boxShadow: (c as any).highlight ? '0 8px 32px rgba(37,99,235,0.12)' : '0 2px 12px rgba(0,0,0,0.03)',
+                                        background: (c as any).highlight ? 'rgba(37,99,235,0.02)' : '#FFFFFF',
+                                    }}
+                                >
+                                    {(c as any).highlight && (
+                                        <div style={{
+                                            position: 'absolute', top: '10px', right: '10px',
+                                            display: 'flex', alignItems: 'center', gap: '4px',
+                                            background: 'linear-gradient(135deg, #2563EB, #4f46e5)',
+                                            color: '#fff', padding: '3px 8px', borderRadius: '6px',
+                                            fontSize: '8px', fontWeight: 700,
+                                            fontFamily: "'JetBrains Mono', monospace",
+                                        }}>
+                                            <Crown size={9} /> OURS
+                                        </div>
+                                    )}
+                                    <div style={{
+                                        width: '8px', height: '8px', borderRadius: '50%',
+                                        background: c.color, marginBottom: '10px',
+                                        boxShadow: `0 0 8px ${c.color}30`,
+                                    }} />
+                                    <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '9px', color: '#94a3b8', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '4px' }}>{c.origin}</p>
+                                    <h4 style={{ fontFamily: "'DM Serif Display', serif", fontSize: '15px', color: (c as any).highlight ? '#2563EB' : '#0F172A', marginBottom: '4px' }}>{c.name}</h4>
+                                    <p style={{ fontSize: '11px', color: '#64748b', lineHeight: 1.5, margin: '0 0 10px' }}>{c.power}</p>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+                                        {c.features.map((f) => (
+                                            <div key={f} style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '10px', color: (c as any).highlight ? '#2563EB' : '#94a3b8' }}>
+                                                <Check size={9} style={{ flexShrink: 0 }} /> {f}
+                                            </div>
+                                        ))}
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
-            <div className="section-divider" style={{ marginTop: '96px' }} />
         </section>
     );
 }

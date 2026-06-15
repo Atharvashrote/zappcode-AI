@@ -1,20 +1,21 @@
 import { useState, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { ShoppingCart, Store, Factory, Globe, Pill, type LucideIcon } from 'lucide-react';
+import { ShoppingCart, Store, Factory, Globe, Pill, ArrowRight } from 'lucide-react';
 
-const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
+import imgFmcg from '../assets/usecases/fmcg.png';
+import imgRetail from '../assets/usecases/retail.png';
+import imgManufacturing from '../assets/usecases/manufacturing.png';
+import imgEcommerce from '../assets/usecases/ecommerce.png';
+import imgPharma from '../assets/usecases/pharma.png';
 
-interface Industry {
-    id: string; label: string; icon: LucideIcon; scenario: string;
-    before: string[]; after: string[];
-}
+const ease: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
-const industries: Industry[] = [
-    { id: 'fmcg', label: 'FMCG', icon: ShoppingCart, scenario: 'Your promotions spike demand 3× — the Promotion Agent pre-positions inventory automatically, while the Pricing Agent adjusts channel margins in real time.', before: ['Manual promotion planning in spreadsheets', 'Inventory positioned 2–3 weeks late', 'Post-mortem ROI analysis only'], after: ['AI-simulated uplift before launch', 'Auto-positioned stock 48 hrs ahead', 'Real-time ROI tracking per SKU'] },
-    { id: 'retail', label: 'Retail', icon: Store, scenario: 'A competitor drops prices across 200 SKUs overnight. The Competitor Agent detects the shift, and the Pricing Agent recommends counter-moves before your first store opens.', before: ['Competitor pricing checked weekly', 'Response cycle: 5–7 business days', 'Blanket discounting erodes margins'], after: ['Continuous monitoring across channels', 'Counter-pricing in under 4 hours', 'SKU-level elasticity-optimised pricing'] },
-    { id: 'manufacturing', label: 'Manufacturing', icon: Factory, scenario: 'Raw material costs surge 18% due to a supply disruption. The Scenario Agent instantly models production alternatives and the ERP Action Agent adjusts purchase orders.', before: ['Weekly S&OP meetings to react', 'Single-source supply dependency', 'PO adjustments take 3+ days'], after: ['Real-time scenario simulations', 'Multi-source risk scoring', 'Automated PO adjustment in minutes'] },
-    { id: 'ecommerce', label: 'E-Commerce', icon: Globe, scenario: 'A viral social media trend drives 5× traffic to a product category. The Market Signal Agent catches it early, the Forecast Agent adjusts, and inventory is repositioned before stockout.', before: ['Trend detected after stockout', 'Flat demand forecasts miss spikes', 'Manual inventory reallocation'], after: ['Social sentiment feeds into forecasts', 'Dynamic demand shaping in real time', 'Auto-triggered warehouse transfers'] },
-    { id: 'pharma', label: 'Pharma', icon: Pill, scenario: 'A seasonal disease outbreak shifts demand patterns across 3 regions. The Deviation Agent flags anomalies, the Forecast Agent recalibrates, and distribution is rebalanced.', before: ['Regional demand forecasted quarterly', 'Outbreak response: 10–14 days', 'Excess stock expires in low-demand zones'], after: ['Daily regional recalibration', 'Auto-response within 24 hours', 'Dynamic redistribution, zero waste'] },
+const industries = [
+    { id: 'fmcg', label: 'FMCG', icon: ShoppingCart, image: imgFmcg, color: '#f97316', scenario: 'Promotions spike demand 3× — the Promotion Agent pre-positions inventory, while the Pricing Agent adjusts margins in real time.', results: ['3× faster stock positioning', 'Real-time ROI per SKU', 'AI-simulated promotional uplift'] },
+    { id: 'retail', label: 'Retail', icon: Store, image: imgRetail, color: '#2563EB', scenario: 'A competitor drops prices across 200 SKUs overnight. The Competitor Agent detects and recommends counter-moves before stores open.', results: ['Counter-pricing in < 4 hours', 'Continuous competitor monitoring', 'SKU-level elasticity pricing'] },
+    { id: 'manufacturing', label: 'Manufacturing', icon: Factory, image: imgManufacturing, color: '#059669', scenario: 'Raw material costs surge 18%. The Scenario Agent models alternatives instantly and the ERP Agent adjusts purchase orders.', results: ['Real-time scenario simulation', 'Automated PO adjustment', 'Multi-source risk scoring'] },
+    { id: 'ecommerce', label: 'E-Commerce', icon: Globe, image: imgEcommerce, color: '#7c3aed', scenario: 'A viral trend drives 5× traffic. The Market Signal Agent catches it early and inventory is repositioned before stockout.', results: ['Social sentiment in forecasts', 'Dynamic demand shaping', 'Auto warehouse transfers'] },
+    { id: 'pharma', label: 'Pharma', icon: Pill, image: imgPharma, color: '#0891b2', scenario: 'A disease outbreak shifts demand across 3 regions. The Deviation Agent flags anomalies and distribution is rebalanced.', results: ['Daily regional recalibration', 'Auto-response in 24 hours', 'Zero-waste redistribution'] },
 ];
 
 export default function UseCases() {
@@ -24,89 +25,116 @@ export default function UseCases() {
     const current = industries[active];
 
     return (
-        <section ref={ref} id="use-cases" style={{ background: '#FAFAF8', padding: '96px 64px' }}>
-            <div className="max-w-[1200px] mx-auto">
-                {/* Eyebrow */}
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, ease }} className="text-center" style={{ marginBottom: '24px' }}>
-                    <span className="eyebrow" style={{ justifyContent: 'center' }}>Industry Fit</span>
-                </motion.div>
+        <section ref={ref} id="use-cases" className="section-light" style={{ padding: 'clamp(80px, 12vw, 160px) 0' }}>
+            <div className="max-w-[1400px] mx-auto" style={{ padding: '0 clamp(24px, 5vw, 64px)' }}>
+                {/* Header */}
+                <div className="text-center" style={{ marginBottom: '24px' }}>
+                    <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, ease }}>
+                        <span className="eyebrow" style={{ justifyContent: 'center' }}>Industry Solutions</span>
+                    </motion.div>
+                    <motion.h2 initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, delay: 0.1, ease }}
+                        style={{ fontFamily: "'DM Serif Display', serif", fontSize: 'clamp(2.2rem, 5vw, 3.8rem)', color: '#0F172A', lineHeight: 1.08, margin: '28px 0 0' }}
+                    >
+                        Built for{' '}<span className="gradient-text">your industry.</span>
+                    </motion.h2>
+                </div>
 
-                {/* Heading */}
-                <motion.h2 initial={{ opacity: 0, y: 40 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay: 0.1, ease }} className="text-center" style={{ fontFamily: "'DM Serif Display'", fontSize: 'clamp(1.8rem, 4vw, 3rem)', color: '#0D1B2A', lineHeight: 1.15, margin: '0 0 clamp(36px, 5vw, 56px)' }}>
-                    Built for <em style={{ color: '#C9952A', fontStyle: 'italic' }}>your industry.</em>
-                </motion.h2>
-
-                {/* Pill tabs with layoutId */}
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.2, ease }} className="flex flex-wrap justify-center" style={{ gap: '8px', marginBottom: 'clamp(36px, 5vw, 48px)' }}>
+                {/* Tabs */}
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.2, ease }}
+                    className="flex flex-wrap justify-center" style={{ gap: '8px', marginBottom: 'clamp(40px, 5vw, 56px)' }}
+                >
                     {industries.map((ind, i) => {
                         const Icon = ind.icon;
                         const isActive = i === active;
                         return (
                             <button key={ind.id} type="button" onClick={() => setActive(i)}
-                                className="relative inline-flex items-center cursor-pointer transition-colors duration-200"
-                                style={{ gap: '8px', padding: '10px 20px', borderRadius: '100px', fontSize: '13px', fontWeight: 600, border: isActive ? 'none' : '0.5px solid #E8E2D9', background: isActive ? '#0D1B2A' : '#FFFFFF', color: isActive ? '#F5F0E8' : '#6B7280', zIndex: 1 }}>
-                                {isActive && (
-                                    <motion.div layoutId="tab-bg" className="absolute inset-0" style={{ background: '#0D1B2A', borderRadius: '100px', zIndex: -1 }} transition={{ type: 'spring', stiffness: 400, damping: 30 }} />
-                                )}
-                                <Icon size={14} />
-                                {ind.label}
+                                style={{
+                                    display: 'inline-flex', alignItems: 'center', gap: '8px',
+                                    padding: '12px 24px', borderRadius: '14px',
+                                    fontSize: '12px', fontWeight: 600, letterSpacing: '0.08em',
+                                    textTransform: 'uppercase', cursor: 'pointer',
+                                    background: isActive ? 'linear-gradient(135deg, #2563EB, #4f46e5)' : '#FFFFFF',
+                                    color: isActive ? '#fff' : '#64748b',
+                                    border: `1px solid ${isActive ? 'transparent' : 'rgba(0,0,0,0.08)'}`,
+                                    boxShadow: isActive ? '0 4px 16px rgba(37,99,235,0.25)' : '0 1px 4px rgba(0,0,0,0.04)',
+                                    transition: 'all 0.4s cubic-bezier(0.23,1,0.32,1)',
+                                    transform: isActive ? 'scale(1.05)' : 'scale(1)',
+                                }}
+                            >
+                                <Icon size={14} /> {ind.label}
                             </button>
                         );
                     })}
                 </motion.div>
 
-                {/* Tab content */}
+                {/* Content */}
                 <AnimatePresence mode="wait">
                     <motion.div key={current.id}
-                        initial={{ x: 20, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        exit={{ x: -20, opacity: 0 }}
-                        transition={{ duration: 0.25, ease }}>
-
-                        {/* Scenario */}
-                        <p style={{ fontFamily: "'DM Serif Display'", fontSize: 'clamp(1rem, 1.4vw, 1.15rem)', fontStyle: 'italic', color: '#0D1B2A', lineHeight: 1.7, textAlign: 'center', maxWidth: '680px', margin: '0 auto clamp(28px, 4vw, 40px)' }}>
-                            &ldquo;{current.scenario}&rdquo;
-                        </p>
-
-                        {/* Before / After with VS divider */}
-                        <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-0 md:gap-0">
-                            {/* Before */}
-                            <div style={{ padding: 'clamp(20px, 3vw, 28px)', borderRadius: '16px 0 0 16px', background: '#F9F9F9', border: '0.5px solid #E8E2D9' }}>
-                                <span style={{ fontFamily: "'JetBrains Mono'", fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#EF4444', display: 'block', marginBottom: '14px' }}>✕ Without AigentG9</span>
-                                <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                                    {current.before.map((item) => (
-                                        <li key={item} className="flex items-start gap-2" style={{ fontSize: '13px', color: '#6B7280', lineHeight: 1.6, padding: '7px 0', borderBottom: '0.5px solid #E8E2D9' }}>
-                                            <span style={{ color: '#EF4444', flexShrink: 0, marginTop: '2px' }}>✗</span>
-                                            {item}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-
-                            {/* VS divider */}
-                            <div className="hidden md:flex items-center justify-center relative" style={{ width: '1px', background: '#E8E2D9' }}>
-                                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#FFFFFF', border: '1px solid #C9952A', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'JetBrains Mono'", fontSize: '9px', fontWeight: 700, color: '#C9952A', letterSpacing: '0.05em' }}>
-                                    VS
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: -20, opacity: 0 }}
+                        transition={{ duration: 0.35, ease }}
+                    >
+                        <div className="grid grid-cols-1 lg:grid-cols-2" style={{ gap: '20px' }}>
+                            {/* Image */}
+                            <div className="img-showcase" style={{ height: 'clamp(280px, 30vw, 420px)' }}>
+                                <img src={current.image} alt={current.label} loading="lazy" decoding="async" />
+                                {/* Floating badge */}
+                                <div style={{
+                                    position: 'absolute', top: '20px', left: '20px', zIndex: 10,
+                                    display: 'flex', alignItems: 'center', gap: '8px',
+                                    padding: '8px 16px', borderRadius: '10px',
+                                    background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(12px)',
+                                    border: '1px solid rgba(0,0,0,0.06)',
+                                    boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+                                }}>
+                                    <current.icon size={14} style={{ color: current.color }} />
+                                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '10px', color: '#0F172A', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                                        {current.label}
+                                    </span>
                                 </div>
                             </div>
 
-                            {/* After */}
-                            <div style={{ padding: 'clamp(20px, 3vw, 28px)', borderRadius: '0 16px 16px 0', background: 'rgba(201,149,42,0.04)', border: '0.5px solid rgba(201,149,42,0.2)' }}>
-                                <span style={{ fontFamily: "'JetBrains Mono'", fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#C9952A', display: 'block', marginBottom: '14px' }}>✓ With AigentG9</span>
-                                <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                                    {current.after.map((item) => (
-                                        <li key={item} className="flex items-start gap-2" style={{ fontSize: '13px', color: '#0D1B2A', fontWeight: 500, lineHeight: 1.6, padding: '7px 0', borderBottom: '0.5px solid rgba(201,149,42,0.1)' }}>
-                                            <span style={{ color: '#22C55E', flexShrink: 0, marginTop: '2px' }}>✓</span>
-                                            {item}
-                                        </li>
+                            {/* Details */}
+                            <div className="card-light flex flex-col justify-center" style={{ padding: 'clamp(28px, 4vw, 44px)' }}>
+                                <p style={{
+                                    fontFamily: "'DM Serif Display', serif",
+                                    fontSize: 'clamp(17px, 2vw, 22px)',
+                                    fontStyle: 'italic', color: '#1e293b',
+                                    lineHeight: 1.6, margin: '0 0 28px',
+                                }}>
+                                    &ldquo;{current.scenario}&rdquo;
+                                </p>
+
+                                <div style={{ marginBottom: '24px' }}>
+                                    <span style={{
+                                        fontFamily: "'JetBrains Mono', monospace", fontSize: '10px', letterSpacing: '0.15em',
+                                        textTransform: 'uppercase', color: current.color,
+                                        display: 'block', marginBottom: '14px',
+                                    }}>✦ Results with AigentG9</span>
+                                    {current.results.map((r) => (
+                                        <div key={r} style={{
+                                            display: 'flex', alignItems: 'center', gap: '10px',
+                                            padding: '10px 0', borderBottom: '1px solid rgba(0,0,0,0.04)',
+                                        }}>
+                                            <div style={{
+                                                width: '6px', height: '6px', borderRadius: '50%',
+                                                background: '#22C55E', flexShrink: 0,
+                                                boxShadow: '0 0 8px rgba(34,197,94,0.3)',
+                                            }} />
+                                            <span style={{ fontSize: '14px', color: '#64748b' }}>{r}</span>
+                                        </div>
                                     ))}
-                                </ul>
+                                </div>
+
+                                <button type="button" className="btn-ghost" style={{ alignSelf: 'flex-start' }}>
+                                    Learn More <ArrowRight size={14} />
+                                </button>
                             </div>
                         </div>
                     </motion.div>
                 </AnimatePresence>
             </div>
-            <div className="section-divider" style={{ marginTop: '96px' }} />
         </section>
     );
 }
